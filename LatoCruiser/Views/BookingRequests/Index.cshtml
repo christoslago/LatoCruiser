@@ -1,0 +1,99 @@
+﻿@model IEnumerable<LatoCruiser.Models.BookingRequest>
+@using Syncfusion.EJ2
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+
+    List<object> commands = new List<object>();
+    commands.Add(new { type = "Edit", buttonOption = new { iconCss = "e-icons e-edit", cssClass = "e-flat" } });
+    commands.Add(new { type = "Delete", buttonOption = new { iconCss = "e-icons e-delete", cssClass = "e-flat" } });
+    commands.Add(new { type = "Save", buttonOption = new { iconCss = "e-icons e-update", cssClass = "e-flat" } });
+    commands.Add(new { type = "Cancel", buttonOption = new { iconCss = "e-icons e-cancel-icon", cssClass = "e-flat" } });
+
+}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<ejs-grid id="Grid"
+          dataSource="@ViewBag.DataSource"
+          height="273"
+          toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Cancel", "Update" })"
+          allowPaging="true" allowSorting="true">
+
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+    <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+
+
+
+    <e-grid-columns>
+        <e-grid-column field="@Html.DisplayNameFor(model => model.BookerName)" headerText="Booker" textAlign="Left" width="120"></e-grid-column>
+        <e-grid-column field="@Html.DisplayNameFor(model => model.BookerEmail)" headerText="Email" width="130"></e-grid-column>
+        <e-grid-column field="@Html.DisplayNameFor(model => model.BookerPhone)" headerText="Phone" width="130" textAlign="Right" format="yMd"></e-grid-column>
+        <e-grid-column field="@Html.DisplayNameFor(model => model.BookStart)" headerText="Date Start" customFormat="@(new { type ="date", format="dd/MM/yyyy" })" width="120"></e-grid-column>
+        <e-grid-column field="@Html.DisplayNameFor(model => model.BookEnd)" headerText="Date End" customFormat="@(new { type ="date", format="dd/MM/yyyy" })" width="120"></e-grid-column>
+        <e-grid-column field="@Html.DisplayNameFor(model => model.BookDescription)" headerText="Notes" width="120"></e-grid-column>
+        <e-grid-column headerText="Manage Records" width="150" commands="commands"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookerEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookerPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookDescription)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookerEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookerPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookEnd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookDescription)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
